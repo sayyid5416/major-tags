@@ -17,4 +17,4 @@ jobs:
           fetch-depth: 0                # You must do this
       
       - name: Update major version
-        uses: ./
+        uses: sayyid5416/major-tags@v1
