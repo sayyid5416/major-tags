@@ -1,4 +1,4 @@
-name: Major Tags
+name: Major Tagging
 author: '@sayyid5416'
 description: This action adds/updates the major tags for any repository according to its minor tags
 branding:
