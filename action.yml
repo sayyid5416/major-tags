@@ -16,10 +16,16 @@ runs:
       with:
         fetch-depth: 0
 
+    - name: Checkout action repository
+      uses: actions/checkout@v3
+      with:
+        repository: sayyid5416/major-tags
+        path: major-tags
+
     - name: Data collection & Checks
       id: data
       shell: bash
-      run: python "src/script.py"
+      run: python "major-tags/src/script.py"
 
     - name: Show tags
       shell: bash
