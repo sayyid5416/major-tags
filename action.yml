@@ -11,6 +11,11 @@ runs:
   using: 'composite'
   steps:
 
+    - name: Checkout main repository on which action will run
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
     - name: Data collection & Checks
       id: data
       shell: bash
