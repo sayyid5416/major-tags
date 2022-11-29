@@ -1,0 +1,41 @@
+name: Major Tags
+author: '@sayyid5416'
+description: This action adds/updates the major tags for any repository according to its minor tags
+branding:
+  icon: tag
+  color: yellow
+
+
+
+runs:
+  using: 'composite'
+  steps:
+
+    - name: Data collection & Checks
+      id: data
+      shell: bash
+      run: python "src/script.py"
+
+    - name: Show tags
+      shell: bash
+      run: |
+        echo "Tags:"
+        echo "- Current version tag: ${{ steps.data.outputs.REF_NAME }}"
+        echo "- Major version tag: ${{ steps.data.outputs.MAJOR_VER }}"
+    
+    - name: Update the ${{ steps.data.outputs.MAJOR_VER }} tag
+      id: update
+      shell: bash
+      run: |
+        git config user.name "${GITHUB_ACTOR}"
+        git config user.email "${GITHUB_ACTOR}@users.noreply.github.com"
+        git tag -fa "${{ steps.data.outputs.MAJOR_VER }}" "${{ steps.data.outputs.REF_NAME }}^{commit}" -m "Update ${{ steps.data.outputs.MAJOR_VER }} tag"
+        git push origin ${{ steps.data.outputs.MAJOR_VER }} --force
+        echo "updated=true" >> $GITHUB_OUTPUT
+    
+    - name: Show Summary
+      if: success() || steps.update.conclusion == 'failure'
+      shell: bash
+      run: |
+        echo "### Major tag \"${{ steps.data.outputs.MAJOR_VER }}\" updated to \"${{ steps.data.outputs.REF_NAME }}\" : ${{ steps.update.outputs.updated == 'true' }}" >> $GITHUB_STEP_SUMMARY
+        
