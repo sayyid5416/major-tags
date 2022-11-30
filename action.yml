@@ -11,21 +11,10 @@ runs:
   using: 'composite'
   steps:
 
-    - name: Checkout main repository on which action will run
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0
-
-    - name: Checkout action repository
-      uses: actions/checkout@v3
-      with:
-        repository: sayyid5416/major-tags
-        path: major-tags
-
     - name: Data collection & Checks
       id: data
       shell: bash
-      run: python "major-tags/src/script.py"
+      run: python "${{ github.action_path }}/src/script.py"
 
     - name: Show tags
       shell: bash
@@ -34,6 +23,11 @@ runs:
         echo "- Current version tag: ${{ steps.data.outputs.REF_NAME }}"
         echo "- Major version tag: ${{ steps.data.outputs.MAJOR_VER }}"
     
+    - name: Checkout main repository on which action will run
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+
     - name: Update the ${{ steps.data.outputs.MAJOR_VER }} tag
       id: update
       shell: bash
