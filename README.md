@@ -10,7 +10,7 @@ GitHub Action to add/update the major tags for any repository based on its minor
 
 
 # Example usage
-```bash
+```yaml
 name: Update Major Version
 
 on:
