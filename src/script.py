@@ -10,7 +10,7 @@ def env(name:str, _def=''):
 
 def set_output(key:str, value:str):
     with open(env('GITHUB_OUTPUT'), 'a') as f:
-        f.write(f'{key}={value}')
+        f.write(f'{key}={value}\n')
 
 
 def set_annotation(
