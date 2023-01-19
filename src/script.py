@@ -5,12 +5,17 @@ from typing import Literal
 
 
 def env(name:str, _def=''):
-    return os.environ.get(name, _def)
+    return os.environ.get(
+        name,
+        _def
+    )
 
 
 def set_output(key:str, value:str):
     with open(env('GITHUB_OUTPUT'), 'a') as f:
-        f.write(f'{key}={value}\n')
+        f.write(
+            f'{key}={value}\n'
+        )
 
 
 def set_annotation(
@@ -42,9 +47,18 @@ if refType != 'tag':
 
 
 # Parsing
-majorTag = refName.split('.', 1)[0]                                                 # Tag name like v1, v2 etc
+majorTag = refName.split(
+    '.', 
+    1
+)[0]                                                                                # Tag name like v1, v2 etc
 
 
-# Set output
-set_output('REF_NAME', refName)
-set_output('MAJOR_VER', majorTag)
+# Set outputs
+set_output(
+    'REF_NAME', 
+    refName
+)
+set_output(
+    'MAJOR_VER', 
+    majorTag
+)
